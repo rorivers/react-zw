@@ -6,13 +6,13 @@ const isVerbose = process.argv.includes('--verbose');
 
 export default {
   entry: {
-    index: '../src/index.js'
-    account: '../src/account.js',
+    index: path.resolve(__dirname, '../src/index.js'),
+    account: path.resolve(__dirname, '../src/account.js'),
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: path.resolve(__dirname, '../public'),
-    filename: isDebug ? '[name.js]' : '[name].[chunkhash:8].js'
+    filename: isDebug ? '[name].js' : '[name].[chunkhash:8].js',
   },
   module: {
     rules: [
@@ -24,27 +24,32 @@ export default {
           options: {
             babelrc: false,
             presets: [
-              ['env', {
-                browser: ["last 2 versions", "safari >= 7"]
-              }],
+              [
+                'env',
+                {
+                  browser: ['last 2 versions', 'safari >= 7'],
+                },
+              ],
               'stage-2',
-              'react'
-            ]
-          }
-        }
-      }
-    ]
+              'react',
+            ],
+          },
+        },
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Account',
-      chunks: ['account']
+      filename: 'account.html',
+      chunks: ['account'],
     }),
 
     new HtmlWebpackPlugin({
       title: 'Index',
-      chunks: ['index']
-    })
+      filename: 'index.html',
+      chunks: ['index'],
+    }),
   ],
 
   stats: {
@@ -57,6 +62,6 @@ export default {
     modules: isVerbose,
     reasons: isDebug,
     timings: true,
-    version: isVerbose
-  }
-}
+    version: isVerbose,
+  },
+};

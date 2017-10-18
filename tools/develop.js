@@ -7,12 +7,6 @@ const compiler = Webpack(config);
 
 const app = new Koa();
 
-app.use(koaWebpack({
-  compiler: compiler
-}));
-
-function doSomething() {
-  middleware.hot.publish({ action: 'reload' });
-}
+app.use(koaWebpack({ compiler }));
 
 app.listen(3030);

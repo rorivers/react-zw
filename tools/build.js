@@ -1,17 +1,12 @@
-import webpack from 'webpack';
-import webpackConfig from '../config/webpack.config';
+import run from './run';
+import clean from './clean';
+import copy from './copy';
+import bundle from './bundle';
 
-function build() {
-  return new Promise((resolve, reject) => {
-    webpack(webpackConfig).run((err, stats) => {
-      if (err) {
-        return reject(err);
-      }
-
-      console.info(stats,toString(webpackConfig.stats));
-      return resolve;
-    });
-  });
+async function build() {
+  await run(clean);
+  await run(copy);
+  await run(bundle);
 }
 
 export default build;
